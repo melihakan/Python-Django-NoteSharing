@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{%block title%} Django Not {% endblock %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+		<!-- CSS here -->
+
+            {% load static %}
+            <link rel="stylesheet" href="{%static 'assets/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/owl.carousel.min.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/ticker-style.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/flaticon.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/slicknav.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/animate.min.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/magnific-popup.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/fontawesome-all.min.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/themify-icons.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/slick.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/nice-select.css' %}">
+            <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+</head>
+<body>
+{% include 'header.html' %}
+{% block context %} {% endblock %}
+{% block body %} {% endblock %}
+{% block slider %} {% endblock %}
+
+{% include 'footer.html' %}
+{% block footer %} {% endblock %}
+
+</body>
+</html>
