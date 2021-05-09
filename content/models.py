@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 class Category(models.Model):
@@ -38,7 +40,7 @@ class Content(models.Model):
 
     file = models.FileField(blank=True, upload_to='files/')
 
-    detail = models.TextField()
+    detail = RichTextUploadingField(blank=True)
     status = models.CharField(max_length=10,choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
