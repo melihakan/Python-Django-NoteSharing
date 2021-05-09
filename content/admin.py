@@ -10,15 +10,19 @@ class ContentImageInline(admin.TabularInline):
     extra = 5
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['title','status']
+    list_display = ['title','status','image_tag']
+    readonly_fields = ('image_tag',)
     list_filter = ['status']
+
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title','category','status']
+    list_display = ['title','category','image_tag','status']
+    readonly_fields = ('image_tag',)
     list_filter = ['status','category']
     inlines = [ContentImageInline]
 
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['title', 'content', 'image']
+    list_display = ['title', 'content','image_tag']
+    readonly_fields = ('image_tag',)
 
 
 
