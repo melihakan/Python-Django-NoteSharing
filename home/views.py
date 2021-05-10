@@ -30,8 +30,7 @@ def referanslarimiz(request):
     context = {'setting': setting}
     return render(request, 'referanslarimiz.html', context)
 def iletisim(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+
 
     if request.method == 'POST': # check post
         form = ContactFormu(request.POST)
@@ -47,5 +46,15 @@ def iletisim(request):
             return HttpResponseRedirect('/iletisim')
     setting = Setting.objects.get(pk=1)
     form = ContactFormu()
-    context={'setting':setting,'form':form  }
+    context={'setting':setting, 'form': form}
     return render(request, 'iletisim.html', context)
+
+def category_contents(request,id,slug):
+    content = Content.objects.filter(category_id=id)
+    category = Category.objects.all()
+    categorydata = Category.objects.get(pk=id)
+    context = {'content': content,
+                'category': category,
+                'categorydata': categorydata
+               }
+    return render(request,'notlar.html',context)

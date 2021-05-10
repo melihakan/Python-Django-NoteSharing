@@ -63,7 +63,7 @@
                                             <li><a href="/referanslarimiz">References</a></li>
                                             <li><a href="/iletisim">Contact</a></li>
                                             {% recursetree category %}
-                                            <li><a href="/category/{{ node.slug }}">{{ node.title }}</a>
+                                            <li><a href="/category/{{ node.id }}/{{ node.slug }}">{{ node.title }}</a>
                                                 {% if not node.is_leaf_node %}
                                                 <ul class="submenu">
                                                     <li><a href="#">{{ children }}</a></li>

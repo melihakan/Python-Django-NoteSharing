@@ -28,7 +28,10 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('hakkimizda/', views.hakkimizda),
     path('referanslarimiz/', views.referanslarimiz),
-    path('iletisim/', views.iletisim),
+    path('iletisim/', views.iletisim,name='iletisim'),
+    path('category/<int:id>/<slug:slug>', views.category_contents, name='category_contents'),
+
+
 
 ]
 if settings.DEBUG:
