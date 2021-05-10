@@ -54,20 +54,23 @@
                                 <!-- Main-menu -->
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
+
+                                        {% load mptt_tags %}
                                         <ul id="navigation">
                                             <li><a href="index.html">Home</a></li>
                                             <li><a href="categori.html">Category</a></li>
                                             <li><a href="/hakkimizda">About</a></li>
                                             <li><a href="/referanslarimiz">References</a></li>
                                             <li><a href="/iletisim">Contact</a></li>
-                                            <li><a href="#">Pages</a>
+                                            {% recursetree category %}
+                                            <li><a href="/category/{{ node.slug }}">{{ node.title }}</a>
+                                                {% if not node.is_leaf_node %}
                                                 <ul class="submenu">
-                                                    <li><a href="elements.html">Element</a></li>
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="details.html">Categori Details</a></li>
+                                                    <li><a href="#">{{ children }}</a></li>
                                                 </ul>
+                                                {% endif %}
                                             </li>
+                                            {% endrecursetree %}
                                         </ul>
                                     </nav>
                                 </div>
