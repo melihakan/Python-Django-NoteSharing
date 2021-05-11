@@ -1,0 +1,155 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{%block title%} Django Not {% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/ticker-style.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+{% include 'header.html' %}
+
+<!-- ================ contact section start ================= -->
+
+
+<section class="contact-section">
+    <div class="container">
+
+        <div class="row">
+
+            <!--================Blog Area =================-->
+            <section class="blog_area single-post-area section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-8 posts-list">
+                            <div class="single-post">
+
+                                <div class="feature-img">
+                                    <img class="img-fluid" src="{{content.image.url}}" alt="">
+                                </div>
+                                <div class="blog_details">
+                                    <h2>{{content.title}}</h2>
+                                    <p>{{content.description}}</p>
+
+                                    <ul class="blog-info-link mt-3 mb-4">
+
+                                        <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                                    </ul>
+                                    <p class="excert">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="comments-area">
+                                <h4> Comments</h4>
+                                <div class="comment-list">
+                                    <div class="single-comment justify-content-between d-flex">
+                                        <div class="user justify-content-between d-flex">
+                                            {%for rs in comments%}
+
+                                            <div class="desc">
+                                                <p class="comment">
+                                                    <strong>{{rs.subject}}</strong><br>
+                                                    {{rs.comment}}
+                                                </p>
+                                                <p>{{rs.rate}}</p>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <h5>
+                                                            <a href="#">{{rs.user.first_name}}</a>
+                                                        </h5>
+                                                        <p class="date">{{rs.create_at}} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {%endfor%}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="comment-form">
+                                <h4>Comment</h4>
+
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{message.tags}}" role="alert">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                <form class="form-contact comment_form" action="/content/addcomment/{{content.id}}"
+                                      id="commentForm" method="post">
+                                    {%csrf_token%}
+                                    <div class="row">
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input class="form-control" name="subject" id="id_subject" type="text"
+                                                       placeholder="Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+
+                                            <div class="form-group">
+                              <textarea class="form-control w-100" name="comment" id="id_comment" cols="30" rows="9"
+                                        placeholder="Write Comment"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="col-2">Rate</label>
+                                            <div class="col-10">
+                                                <input class="form-control" min="0" max="5"
+                                                       type="range" name="rate">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {% if user.id is not None %}
+                                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">
+                                            Send Message
+                                        </button>
+                                        {% else %}
+                                            <a href="/login"> Login </a>olunuz
+                                        {% endif %}
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <!--================ Blog Area end =================-->
+
+
+        </div>
+
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+{% include 'footer.html' %}
+

@@ -7,7 +7,9 @@ from django.shortcuts import render
 # Create your views here.
 from home.models import Setting,ContactFormu,ContactFormMessage
 
-from content.models import Content, Category
+from content.models import Content, Category, Images, Comment
+
+from home.forms import SearchForm
 
 
 def index(request):
@@ -31,11 +33,17 @@ def index(request):
 
 def hakkimizda(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    category = Category.objects.all()
+    context = {'setting': setting,
+               'category': category,
+               }
     return render(request, 'hakkimizda.html', context)
 def referanslarimiz(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    category = Category.objects.all()
+    context = {'setting': setting,
+               'category': category,
+               }
     return render(request, 'referanslarimiz.html', context)
     #return HttpResponse("hello")
 def iletisim(request):
@@ -53,7 +61,12 @@ def iletisim(request):
             return HttpResponseRedirect('/iletisim')
     setting = Setting.objects.get(pk=1)
     form = ContactFormu()
-    context={'setting':setting, 'form': form}
+    category = Category.objects.all()
+    context = {'setting': setting,
+               'category': category,
+               'form': form
+               }
+
     return render(request, 'iletisim.html', context)
 
 def category_contents(request,id,slug):
@@ -65,3 +78,27 @@ def category_contents(request,id,slug):
                 'categorydata': categorydata
                }
     return render(request,'notlar.html',context)
+
+def content_detail(request,id,slug):
+    category = Category.objects.all()
+    content = Content.objects.get(pk=id)
+    image = Images.objects.filter(content_id=id)
+    comments = Comment.objects.filter(content_id=id,status='True')
+    context = {'category': category,
+               'content': content,
+               'image': image,
+               'comments': comments
+               }
+    return render(request,'content_detail.html',context)
+def content_search(request):
+    if request.method == 'POST': # check post
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            category = Category.objects.all()
+            query = form.cleaned_data['query'] # get form input data
+            content = Content.objects.filter(title__icontains=query)  #SELECT * FROM product WHERE title LIKE '%query%'
+            context = {'content': content, #'query':query,
+                       'category': category }
+            return render(request, 'content_search.html', context)
+
+    return HttpResponseRedirect('/')
