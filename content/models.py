@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
@@ -5,6 +7,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Category(MPTTModel):
     STATUS = (
@@ -17,7 +20,7 @@ class Category(MPTTModel):
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True,upload_to='images/')
     status = models.CharField(max_length=10, choices=STATUS)
-    slug = models.SlugField()
+    slug = models.SlugField(null=False, unique=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -38,6 +41,12 @@ class Category(MPTTModel):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.slug})
+
+
+
+
 class Content(models.Model):
     STATUS = (
         ('True', 'Evet'),
@@ -49,7 +58,7 @@ class Content(models.Model):
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
-    slug = models.SlugField(blank=True,max_length=150)
+    slug = models.SlugField(null=False, unique=True)
     file = models.FileField(blank=True, upload_to='files/')
 
     detail = RichTextUploadingField(blank=True)
@@ -62,6 +71,9 @@ class Content(models.Model):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('content_detail', kwargs={'slug': self.slug})
+
 class Images(models.Model):
     content = models.ForeignKey(Content,on_delete=models.CASCADE)
     title = models.CharField(max_length=50,blank=True)
@@ -72,6 +84,8 @@ class Images(models.Model):
     def image_tag(self):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
+
+
 
 class Comment(models.Model):
     STATUS = (

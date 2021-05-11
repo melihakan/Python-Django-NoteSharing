@@ -84,7 +84,7 @@ def content_detail(request,id,slug):
     category = Category.objects.all()
     content = Content.objects.get(pk=id)
     image = Images.objects.filter(content_id=id)
-    comments = Comment.objects.filter(content_id=id,status='True')
+    comments = Comment.objects.filter(content_id=id, status='True')
     context = {'category': category,
                'content': content,
                'image': image,
