@@ -1,3 +1,4 @@
+import json
 
 from django.contrib import messages
 
@@ -96,9 +97,27 @@ def content_search(request):
         if form.is_valid():
             category = Category.objects.all()
             query = form.cleaned_data['query'] # get form input data
+            #catid = form.cleaned_data['catid']
+            #if catid == 0:
             content = Content.objects.filter(title__icontains=query)  #SELECT * FROM product WHERE title LIKE '%query%'
-            context = {'content': content, #'query':query,
+            #else:
+                #content = Content.objects.filter(title__icontains=query, category_id=catid)
+            context = {'content': content, 'query':query,
                        'category': category }
             return render(request, 'content_search.html', context)
 
     return HttpResponseRedirect('/')
+def content_search_auto(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        content = Content.objects.filter(title__icontains=q)
+        results = []
+        for rs in content:
+            content_json = {}
+            content_json = rs.title +" > " + rs.category.title
+            results.append(content_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
