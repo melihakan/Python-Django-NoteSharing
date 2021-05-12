@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{%block title%} Django Not {% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/ticker-style.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+{% include 'header.html' %}
+
+<!-- ================ contact section start ================= -->
+<section class="contact-section">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-2">
+                {% include 'user_panel.html' %}
+            </div>
+            <div class="col-10">
+
+                    <div class="card-body" align="right" >
+                        <img src="{{profile.image.url}}" class="card-title" width="100px" height="100px">
+
+                        <form class="form">
+                            <div class="form-group m-t-40 row">
+                                <label for="example-text-input" class="col-2 col-form-label">İsim</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="text" value="{{profile.user.username}}"
+                                           id="example-text-input">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-search-input" class="col-2 col-form-label">City</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="search" value="{{profile.city}}"
+                                           id="example-search-input">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-2 col-form-label">Email</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="email" value="{{profile.user.email}}"
+                                           id="example-email-input">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-url-input" class="col-2 col-form-label">Country</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="url" value="{{profile.country}}"
+                                           id="example-url-input">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="tel" value="{{profile.phone}}"
+                                           id="example-tel-input">
+                                </div>
+                            </div>
+
+
+            </div>
+</section>
+<!-- ================ contact section end ================= -->
+{% include 'footer.html' %}
+
