@@ -7,11 +7,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from home.models import Setting,ContactFormu,ContactFormMessage
+from home.models import Setting,ContactFormu,ContactFormMessage,UserProfile
 
 from content.models import Content, Category, Images, Comment
 
 from home.forms import SearchForm,SignUpForm
+
+
 
 
 def index(request):
@@ -149,7 +151,14 @@ def signup_view(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
+            current_user = request.user
+            data = UserProfile()
+            data.user_id = current_user.id
+            data.image = "images/users/user.png"
+            data.save()
+            messages.success(request, "Success.Welcome :)")
             return HttpResponseRedirect('/')
+
     form = SignUpForm()
     category = Category.objects.all()
     context = {'category': category,'form': form}

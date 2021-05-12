@@ -39,48 +39,57 @@
             </div>
             <div class="col-10">
 
-                    <div class="card-body" align="right" >
-                        <img src="{{profile.image.url}}" class="card-title" width="100px" height="100px">
+                <div class="card-body" align="right">
+                    <img src="{{profile.image.url}}" class="card-title" width="100px" height="100px">
 
-                        <form class="form">
-                            <div class="form-group m-t-40 row">
-                                <label for="example-text-input" class="col-2 col-form-label">İsim</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="text" value="{{profile.user.username}}"
-                                           id="example-text-input">
-                                </div>
+                    <form class="form">
+                        <div class="form-group m-t-40 row">
+                            <label for="example-text-input" class="col-2 col-form-label">İsim</label>
+                            <div class="col-10">
+                                <input class="form-control" type="text" value="{{profile.user.username}}"
+                                       id="example-text-input">
                             </div>
-                            <div class="form-group row">
-                                <label for="example-search-input" class="col-2 col-form-label">City</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="search" value="{{profile.city}}"
-                                           id="example-search-input">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-search-input" class="col-2 col-form-label">City</label>
+                            <div class="col-10">
+                                <input class="form-control" type="search" value="{{profile.city}}"
+                                       id="example-search-input">
                             </div>
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Email</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="email" value="{{profile.user.email}}"
-                                           id="example-email-input">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Email</label>
+                            <div class="col-10">
+                                <input class="form-control" type="email" value="{{profile.user.email}}"
+                                       id="example-email-input">
                             </div>
-                            <div class="form-group row">
-                                <label for="example-url-input" class="col-2 col-form-label">Country</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="url" value="{{profile.country}}"
-                                           id="example-url-input">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-url-input" class="col-2 col-form-label">Country</label>
+                            <div class="col-10">
+                                <input class="form-control" type="url" value="{{profile.country}}"
+                                       id="example-url-input">
                             </div>
-                            <div class="form-group row">
-                                <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="tel" value="{{profile.phone}}"
-                                           id="example-tel-input">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
+                            <div class="col-10">
+                                <input class="form-control" type="tel" value="{{profile.phone}}"
+                                       id="example-tel-input">
                             </div>
+                        </div>
+                        <a href="/user/update" type="submit" value="login" class="btn btn-info waves-effect waves-light m-t-10">
+                            UPDATE
+                        </a>
 
-
+                        <a href="/user/password" type="submit" value="login" class="btn btn-info waves-effect waves-light m-t-10">
+                            CHANGE PASSWORD
+                        </a>
+                    </form>
+                </div>
             </div>
+        </div>
+    </div>
 </section>
 <!-- ================ contact section end ================= -->
 {% include 'footer.html' %}
