@@ -5,10 +5,11 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.contrib import messages
-from content.models import Category
+from content.models import Category,Comment
 from django.contrib.auth.decorators import login_required
 
 from user.forms import UserUpdateForm, ProfileUpdateForm
+
 
 from home.models import UserProfile
 
@@ -17,7 +18,7 @@ def index(request):
     category = Category.objects.all()
 
     current_user = request.user
-    profile = UserProfile.objects.get(user_id=current_user.id)
+    profile = UserProfile.objects.get(user_id = current_user.id)
     context = {'category': category,
                'profile': profile
                }
@@ -60,3 +61,18 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'change_password.html', {'form': form,'category': category
                        })
+
+def comments(request):
+    category = Category.objects.all()
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id)
+    context = {
+        'category': category,
+        'comments': comments,
+    }
+    return render(request, 'user_comments.html', context)
+def deletecomment(request,id):
+    current_user = request.user
+    Comment.objects.filter(id=id,user_id=current_user.id).delete()
+    messages.success(request,'Comment Deleted..')
+    return HttpResponseRedirect('/user/comments')
