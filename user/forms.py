@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.forms import TextInput, EmailInput, Select, FileInput
 
+from content.models import Content, Category
 from home.models import UserProfile
 
 
@@ -34,3 +35,21 @@ class ProfileUpdateForm(forms.ModelForm):
             'country'   : TextInput(attrs={'class': 'input','placeholder':'country' }),
             'image'     : FileInput(attrs={'class': 'input', 'placeholder': 'image', }),
         }
+
+class UserNotesForm(forms.ModelForm):
+    class Meta:
+        model = Content
+        fields = ('title', 'keywords', 'description','image','file','detail','category','slug')
+        widgets = {
+            'title'     : TextInput(attrs={'class': 'input','placeholder':'title'}),
+            'keywords'   : TextInput(attrs={'class': 'input','placeholder':'keywords'}),
+            'description'      : TextInput(attrs={'class': 'input','placeholder':'description'}),
+            'detail'   : TextInput(attrs={'class': 'input','placeholder':'detail' }),
+            'image'     : FileInput(attrs={'class': 'input', 'placeholder': 'image', }),
+            'file': FileInput(attrs={'class': 'input', 'placeholder': 'file', }),
+            'category': Select(attrs={'class': 'input','placeholder':'category' },choices=Category.objects.all()),
+            'slug': TextInput(attrs={'class': 'input', 'placeholder': 'slug'}),
+        }
+
+
+

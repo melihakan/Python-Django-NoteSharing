@@ -5,11 +5,10 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.contrib import messages
-from content.models import Category,Comment
+from content.models import Category,Comment,Content
 from django.contrib.auth.decorators import login_required
 
-from user.forms import UserUpdateForm, ProfileUpdateForm
-
+from user.forms import UserUpdateForm, ProfileUpdateForm, UserNotesForm
 
 from home.models import UserProfile
 
@@ -76,3 +75,74 @@ def deletecomment(request,id):
     Comment.objects.filter(id=id,user_id=current_user.id).delete()
     messages.success(request,'Comment Deleted..')
     return HttpResponseRedirect('/user/comments')
+@login_required(login_url='login')
+def notes(request):
+     category = Category.objects.all()
+     current_user = request.user
+     notes = Content.objects.all()
+     #form = NotesForm()
+     context = {
+         'category': category,
+         'notes': notes,
+     }
+     return render(request, 'user_notes.html', context)
+
+@login_required(login_url='login')
+def addnotes(request):
+
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        form = UserNotesForm(request.POST,request.FILES) # request.user is user  data
+        if form.is_valid():
+            #current_user = request.user
+            data = Content()
+            #data.user_id = current_user.id
+            data.title = form.cleaned_data['title']
+            data.keywords = form.cleaned_data['keywords']
+            data.description = form.cleaned_data['description']
+            data.detail = form.cleaned_data['detail']
+            data.image = form.cleaned_data['image']
+            data.file = form.cleaned_data['file']
+            data.status= 'False'
+            data.category = form.cleaned_data['category']
+            data.save()
+            return HttpResponseRedirect('/user/notes')
+        else:
+            return HttpResponseRedirect('/user/addnotes')
+    else:
+        category = Category.objects.all()
+        current_user = request.user
+        notes = Content.objects.all()
+        form = UserNotesForm()
+        context = {
+            'category': category,
+            'notes': notes,
+            'form':form,
+        }
+        return render(request, 'user_addnotes.html', context)
+@login_required(login_url='login')
+def editnotes(request,id):
+    content = Content.objects.get(id=id)
+    if request.method == 'POST':
+        form = UserNotesForm(request.POST,request.FILES,instance=content)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Updated')
+            return HttpResponseRedirect('/user/notes')
+        else:
+            messages.success(request, 'ERROR')
+            return HttpResponseRedirect('/user/editnotes')
+    else:
+        category = Category.objects.all()
+        form = UserNotesForm(instance=content)
+        context = {
+            'category': category,
+            'form':form,
+        }
+        return render(request,'user_editnotes.html',context)
+
+
+@login_required(login_url='login')
+def deletenotes(request,id):
+    Content.objects.filter(id=id).delete()
+    return HttpResponseRedirect('/user/notes')

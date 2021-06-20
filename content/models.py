@@ -52,13 +52,13 @@ class Content(models.Model):
         ('True', 'Evet'),
         ('False', 'Hayır'),
     )
-
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE) #many to one relation with Category
     title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
-    slug = models.SlugField(null=False, unique=True)
+    slug = models.SlugField(blank=True, unique=True)
     file = models.FileField(blank=True, upload_to='files/')
 
     detail = RichTextUploadingField(blank=True)
@@ -70,7 +70,6 @@ class Content(models.Model):
     def image_tag(self):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
-
     def get_absolute_url(self):
         return reverse('content_detail', kwargs={'slug': self.slug})
 

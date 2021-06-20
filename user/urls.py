@@ -9,8 +9,10 @@ urlpatterns = [
     path('password/', views.change_password, name='change_password'),
     path('comments/', views.comments, name='comments'),
     path('deletecomment/<int:id>', views.deletecomment, name='deletecomment'),
-
-
+    path('addnotes/', views.addnotes, name='addnotes'),
+    path('notes/', views.notes, name='notes'),
+    path('editnotes/<int:id>', views.editnotes, name='editnotes'),
+    path('deletenotes/<int:id>', views.deletenotes, name='deletenotes'),
 
     #path('addcomment/<int:id>', views.addcomment, name='addcomment'),
     # ex: /polls/5/

@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{%block title%} Django Not {% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/ticker-style.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+    {% block head %} {% endblock %}
+</head>
+<style>
+.right {
+
+
+
+  padding-left: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<body>
+{% include 'header.html' %}
+
+<!-- ================ contact section start ================= -->
+<section class="contact-section">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-2">
+                {% include 'user_panel.html' %}
+            </div>
+            <div class="col-10">
+                <div class="right">
+
+
+                    <a href="/user/addnotes" type="submit" value="login"
+                       class="btn btn-info waves-effect waves-light m-t-10">
+                        ADD
+                    </a>
+
+
+                    <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Content</th>
+
+                            <th class="text-left">description</th>
+                            <th class="text-left">status</th>
+                            <th class="text-left">image</th>
+                            <th class="text-left">file</th>
+                            <th class="text-left">create_at</th>
+
+                        </tr>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div style="color: #d43f3a; font-size: medium">
+                            {{ message|safe }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% for rs in notes %}
+                        <tr>
+                            <td class="text-left">
+
+                                <strong style="color:red"> {{ rs.title}}</strong>
+
+                            </td>
+
+                            <td class="text-left">{{ rs.description}}</td>
+                            <td class="text-left">{{ rs.status}}</td>
+                            <td class="text-left"><img class="card-img rounded-0" src="{{ rs.image.url }}" alt=""></td>
+                            <td class="text-left">{{ rs.file}}</td>
+
+                            <td class="text-left">{{ rs.create_at}}</td>
+                            <td class="text-left">
+                                <a class="primary-btn" style="color:red" href="/user/editnotes/{{ rs.id }}"
+                                > Edit </a>
+                            </td>
+                            <td class="text-left">
+                                <a class="primary-btn" style="color:red" href="/user/deletenotes/{{ rs.id }}"
+                                   onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+{% include 'footer.html' %}
+
