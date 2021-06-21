@@ -58,7 +58,7 @@ class Content(models.Model):
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
-    slug = models.SlugField(blank=True, unique=True)
+    slug = models.SlugField(blank=True, )
     file = models.FileField(blank=True, upload_to='files/')
 
     detail = RichTextUploadingField(blank=True)
@@ -109,3 +109,20 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject', 'comment', 'rate']
+
+
+class CImages(models.Model):
+    content = models.ForeignKey(Content,on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=50,blank=True)
+    image = models.ImageField(blank=True,upload_to='images/')
+    def __str__(self):
+        return self.title
+
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
+class ContentImageForm(ModelForm):
+    class Meta:
+        model = CImages
+        fields = ['title', 'image']
+

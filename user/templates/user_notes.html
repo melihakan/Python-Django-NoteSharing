@@ -34,17 +34,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 </style>
 <body>
 {% include 'header.html' %}
@@ -74,6 +63,7 @@
                             <th class="text-left">description</th>
                             <th class="text-left">status</th>
                             <th class="text-left">image</th>
+                            <th class="text-left">GALLERY</th>
                             <th class="text-left">file</th>
                             <th class="text-left">create_at</th>
 
@@ -96,6 +86,9 @@
                             <td class="text-left">{{ rs.description}}</td>
                             <td class="text-left">{{ rs.status}}</td>
                             <td class="text-left"><img class="card-img rounded-0" src="{{ rs.image.url }}" alt=""></td>
+                            <td class="text-left">
+                                <a href="javascript:;" style="color:blue" onclick="window.open('/user/addimages/{{rs.id}}','gallery','height=600 weight=800,top=50,left=150')">Gallery</a>
+                            </td>
                             <td class="text-left">{{ rs.file}}</td>
 
                             <td class="text-left">{{ rs.create_at}}</td>

@@ -1,0 +1,31 @@
+
+<!-- ================ contact section start ================= -->
+<section class="contact-section">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-10">
+                <div class="right">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="id_title">Title</label>
+                        <input type="text" name="title" class="input" placeholder="title" maxlength="50" id="id_title">
+                        <label for="id_image">Image</label>
+                        <input type="file" name="image" class="input" placeholder="image" accept="image/*" id="id_image">
+                        <button class="primary_btn" type="submit">Upload Image</button>
+
+                    </form>
+                    <br>
+                    <br>
+                    {% for rs in images %}
+                        <img src="{{rs.image.url}}"height="100">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ contact section end ================= -->
+
+

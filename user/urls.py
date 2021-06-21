@@ -13,6 +13,7 @@ urlpatterns = [
     path('notes/', views.notes, name='notes'),
     path('editnotes/<int:id>', views.editnotes, name='editnotes'),
     path('deletenotes/<int:id>', views.deletenotes, name='deletenotes'),
+    path('addimages/<int:id>', views.addimages, name='addimages'),
 
     #path('addcomment/<int:id>', views.addcomment, name='addcomment'),
     # ex: /polls/5/

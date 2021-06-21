@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.contrib import messages
-from content.models import Category,Comment,Content
+from content.models import Category, Comment, Content, ContentImageForm, CImages
 from django.contrib.auth.decorators import login_required
 
 from user.forms import UserUpdateForm, ProfileUpdateForm, UserNotesForm
@@ -79,8 +79,9 @@ def deletecomment(request,id):
 def notes(request):
      category = Category.objects.all()
      current_user = request.user
+     #notes = Content.objects.filter(user_id = current_user.id)
      notes = Content.objects.all()
-     #form = NotesForm()
+     #form = UserNotesForm()
      context = {
          'category': category,
          'notes': notes,
@@ -146,3 +147,32 @@ def editnotes(request,id):
 def deletenotes(request,id):
     Content.objects.filter(id=id).delete()
     return HttpResponseRedirect('/user/notes')
+
+
+def addimages(request,id):
+    if request.method == 'POST':
+
+        lasturl = request.META.get('HTTP_REFERER')
+        form = ContentImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            data = CImages()
+            data.title = form.cleaned_data['title']
+            data.image = form.cleaned_data['image']
+            data.save()
+            messages.success(request,'Uploaded')
+            return HttpResponseRedirect(lasturl)
+        else:
+            messages.warning(request,'ERROR')
+            return HttpResponseRedirect(lasturl)
+    else:
+        category = Category.objects.all()
+        content = Content.objects.get(id=id)
+        images=[]
+        form = ContentImageForm()
+        context = {
+            'content': content,
+            'images': images,
+            'form': form,
+            'category': category,
+        }
+        return render(request,'content_gallery.html',context)
